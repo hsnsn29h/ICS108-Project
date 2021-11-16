@@ -1,6 +1,8 @@
 package project;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -17,6 +19,10 @@ import javafx.stage.Stage;
 // Just a test class to check whether the data is read or not.
 
 public class TestClass extends Application{
+	
+	static int indexOnStudentsPane = 0;
+	static TextField text_ID;
+	static ListView<String> list_Rcourses;
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -54,9 +60,11 @@ public class TestClass extends Application{
 		Label[] labels = new Label[3];
 		String[] labelsNames = {"Student ID","Registered Courses","Not Registered Courses"};
 		
-		TextField text_ID = new TextField();
-		ListView<String> list_Rcourses = new ListView<String>();
+	    text_ID = new TextField(CommonClass.getStudentID(indexOnStudentsPane));
+	    list_Rcourses = new ListView<String>();
 		ComboBox<String> list_NRcourses = new ComboBox<String>();
+		
+	    CommonClass.listCourses(list_Rcourses, indexOnStudentsPane);
 		
 		Control[] views = {text_ID, list_Rcourses, list_NRcourses};
 		
@@ -75,14 +83,17 @@ public class TestClass extends Application{
 				}
 		}
 
+			
 		
 		Button[] buttons = new Button[6];
 		String[] buttonNames = {"Back", "Pervious", "Next", "Register", "Drop", "Search"};
 		int buttonCounter = 0;
+		Handler handler = new TestClass().new Handler();
 			for(String name : buttonNames) {
 			
 				buttons[buttonCounter] = new Button(name);
 				buttons[buttonCounter].prefWidthProperty().bind(hBoxes[3].widthProperty().divide(6));
+				buttons[buttonCounter].setOnAction(handler);
 				buttonCounter++;	
 				}
 
@@ -100,6 +111,37 @@ public class TestClass extends Application{
 		return scene;
 		
 		}
+	
+	
+	
+	
+	class Handler implements EventHandler<ActionEvent>{
+
+		@Override
+		public void handle(ActionEvent button) {
+
+			if(((Button)button.getSource()).getText() == "Next") {
+				indexOnStudentsPane++;
+				text_ID.setText(CommonClass.getStudentID(indexOnStudentsPane));
+				
+			}else if(((Button)button.getSource()).getText() == "Pervious") {
+				
+				if(indexOnStudentsPane == 0)indexOnStudentsPane = CommonClass.studentListSize;
+				else indexOnStudentsPane--;
+				text_ID.setText(CommonClass.getStudentID(indexOnStudentsPane));
+				
+			}
+			
+		    CommonClass.listCourses(list_Rcourses, indexOnStudentsPane);
+
+			
+		}
+		
+		
+		
+		
+		
+	}
 
 
 
