@@ -23,6 +23,7 @@ public class TestClass extends Application{
 	static int indexOnStudentsPane = 0;
 	static TextField text_ID;
 	static ListView<String> list_Rcourses;
+	static ComboBox<String> list_NRcourses;
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -62,9 +63,10 @@ public class TestClass extends Application{
 		
 	    text_ID = new TextField(CommonClass.getStudentID(indexOnStudentsPane));
 	    list_Rcourses = new ListView<String>();
-		ComboBox<String> list_NRcourses = new ComboBox<String>();
+	    list_NRcourses = new ComboBox<String>();
 		
-	    CommonClass.listCourses(list_Rcourses, indexOnStudentsPane);
+	    CommonClass.listRCourses(list_Rcourses, indexOnStudentsPane);
+		CommonClass.listNRCourses(list_NRcourses, indexOnStudentsPane);
 		
 		Control[] views = {text_ID, list_Rcourses, list_NRcourses};
 		
@@ -123,16 +125,34 @@ public class TestClass extends Application{
 			if(((Button)button.getSource()).getText() == "Next") {
 				indexOnStudentsPane++;
 				text_ID.setText(CommonClass.getStudentID(indexOnStudentsPane));
-				
+
 			}else if(((Button)button.getSource()).getText() == "Pervious") {
 				
 				if(indexOnStudentsPane == 0)indexOnStudentsPane = CommonClass.studentListSize;
 				else indexOnStudentsPane--;
 				text_ID.setText(CommonClass.getStudentID(indexOnStudentsPane));
+
+			}else if(((Button)button.getSource()).getText() == "Search") {
+				
+				indexOnStudentsPane = CommonClass.findStudentByID(text_ID.getText());
+				
+			}else if(((Button)button.getSource()).getText() == "Drop") {
+				
+				CommonClass.dropCourse(text_ID.getText(), list_Rcourses);
+				
+				
+			}else if(((Button)button.getSource()).getText() == "Register") {
+				
+				CommonClass.registerCourse(text_ID.getText(), list_NRcourses);
 				
 			}
 			
-		    CommonClass.listCourses(list_Rcourses, indexOnStudentsPane);
+			CommonClass.listRCourses(list_Rcourses, indexOnStudentsPane);
+			CommonClass.listNRCourses(list_NRcourses, indexOnStudentsPane);
+			
+			}
+			
+		    
 
 			
 		}
@@ -153,4 +173,4 @@ public class TestClass extends Application{
 	
 	
 
-}
+
