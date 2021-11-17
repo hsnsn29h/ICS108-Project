@@ -12,8 +12,10 @@ import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 // Just a test class to check whether the data is read or not.
@@ -24,16 +26,19 @@ public class TestClass extends Application{
 	static TextField text_ID;
 	static ListView<String> list_Rcourses;
 	static ComboBox<String> list_NRcourses;
-	
+	Stage primaryStage;
+	Scene sceneStudents;
+	Scene mainScene;
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
-
-		Scene sceneStudents = createStudentsScene();
+		this.primaryStage = primaryStage;
+	    this.sceneStudents = createStudentsScene();
+	    this.mainScene = createMainScene();
 		
 		
-		primaryStage.setScene(sceneStudents);
-		primaryStage.show();
+		this.primaryStage.setScene(mainScene);
+		this.primaryStage.show();
 		
 	}
 	
@@ -47,11 +52,37 @@ public class TestClass extends Application{
 	}
 	
   
+	public Scene createMainScene() {
+		
+		BorderPane mainPane = new BorderPane();
+		mainPane.setPadding(new Insets(24, 24, 24, 24));
+		
+		Label text = new Label("Registration System");
+		text.setFont(Font.font(48));
+		
+		HBox hBox = new HBox(12);
+		hBox.setAlignment(Pos.CENTER);
+		
+		mainPane.setCenter(text);
+		mainPane.setBottom(hBox);
+		
+		Button[] buttons = new Button[3];
+		String[] buttonsNames = {"View Courses", "View students Details", "Save"};
+		
+		for(int i = 0; i < buttons.length; i++) {
+			
+			buttons[i] = new Button(buttonsNames[i]);
+			buttons[i].setOnAction(new Handler());
+		}
+		
+		hBox.getChildren().addAll(buttons);
+		
+		return new Scene(mainPane, 512, 512);
+	}
 	
 	
 	
-	
-	public static Scene createStudentsScene() {
+	public Scene createStudentsScene() {
 		
 		VBox vBox = new VBox();
 		vBox.setPadding(new Insets(24,24,24,24));
@@ -90,7 +121,7 @@ public class TestClass extends Application{
 		Button[] buttons = new Button[6];
 		String[] buttonNames = {"Back", "Pervious", "Next", "Register", "Drop", "Search"};
 		int buttonCounter = 0;
-		Handler handler = new TestClass().new Handler();
+		Handler handler = new Handler();
 			for(String name : buttonNames) {
 			
 				buttons[buttonCounter] = new Button(name);
@@ -144,6 +175,21 @@ public class TestClass extends Application{
 			}else if(((Button)button.getSource()).getText() == "Register") {
 				
 				CommonClass.registerCourse(text_ID.getText(), list_NRcourses);
+				
+			}else if(((Button)button.getSource()).getText() == "Back") {
+				
+				
+				primaryStage.setScene(mainScene);
+				
+			}else if(((Button)button.getSource()).getText() == "View students Details") {
+				
+				
+				primaryStage.setScene(sceneStudents);
+				
+			}else if(((Button)button.getSource()).getText() == "Save") {
+				
+				
+				CommonClass.save();
 				
 			}
 			

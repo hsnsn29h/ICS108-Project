@@ -3,8 +3,10 @@ package project;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import javafx.scene.control.ComboBox;
@@ -19,7 +21,7 @@ public class CommonClass {
    
     
 	public static final void loadBinaryData() {
-        System.out.println("start loading");
+  
   try (
       FileInputStream fos = new FileInputStream(FILE);
       ObjectInputStream oos = new ObjectInputStream(fos);
@@ -27,12 +29,6 @@ public class CommonClass {
 	  CommonClass.courseList = (ArrayList<Course> ) oos.readObject();
 	  CommonClass.studentList = (ArrayList<Student> ) oos.readObject();
 	  studentListSize = studentList.size();
-	  for ( int i = 0 ; i<  CommonClass.courseList.size(); i++)
-		  System.out.println(CommonClass.courseList.get(i));
-	  
-	  System.out.print(CommonClass.studentList.size());
-	  for ( int i = 0 ; i<  CommonClass.studentList.size(); i++)
-		  System.out.println(CommonClass.studentList.get(i));
       
   }   
   
@@ -147,12 +143,31 @@ public class CommonClass {
 			courseList.get(findCourseByID(courseID)).register();
 			}else {System.out.println("you must choose a course to register");}
 		}
+		
+		public static void save() {
+			
+			
+			  try (
+				      FileOutputStream fos = new FileOutputStream(FILE);
+				      ObjectOutputStream oos = new ObjectOutputStream(fos);
+				      ){
+					  oos.writeObject(CommonClass.courseList);
+					  oos.writeObject(CommonClass.studentList);
+				      
+				  }   
+				  
+				  
+				  catch (FileNotFoundException  ex) {
+				      System.out.println(ex.getMessage() );
+				  }
+
+				  catch (IOException ex) {
+				      System.out.println(ex.getMessage());
+				      }
+			
+			
+		}
 	
 	
 	
-	
-	
-	
-    
-    
 }
