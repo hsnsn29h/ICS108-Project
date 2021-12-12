@@ -5,13 +5,17 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -105,7 +109,7 @@ public class StudentsScene extends Scene {
 	}
 
 	public static void listRCourses(ListView<String> listView, int index) {
-		if (index >= 0) {
+		
 			index %= CommonClass.getStudentListSize();
 
 			listView.getItems().clear();
@@ -115,12 +119,11 @@ public class StudentsScene extends Scene {
 				listView.getItems().add(CommonClass.getStudentList().get(index).getCourses().get(i).getCourseID());
 
 			}
-		} else
-			System.out.println("wrong id");
+		
 	}
 
 	public static void listNRCourses(ComboBox<String> comboBox, int index) {
-		if (index >= 0) {
+		
 			index %= CommonClass.getStudentListSize();
 
 			comboBox.getItems().clear();
@@ -136,8 +139,7 @@ public class StudentsScene extends Scene {
 					comboBox.getItems().add(CommonClass.getCourseList().get(i).getCourseID());
 
 			}
-		} else
-			System.out.println("wrong id");
+		 
 
 	}
 
@@ -148,12 +150,12 @@ public class StudentsScene extends Scene {
 				CommonClass.getStudentList().get(findStudentByID(stuID)).getCourses()
 						.add(CommonClass.getCourseList().get(CommonClass.findCourseByID(courseID)));
 			} else {
-				System.out.println("there is no avaliable seats");
+				showAlert("There is no avaliable seats");
 			}
 
 			CommonClass.getCourseList().get(CommonClass.findCourseByID(courseID)).register();
 		} else {
-			System.out.println("you must choose a course to register");
+			showAlert("You must choose a course to register");
 		}
 	}
 
@@ -166,10 +168,20 @@ public class StudentsScene extends Scene {
 
 			CommonClass.getCourseList().get(CommonClass.findCourseByID(courseID)).drop();
 		} else {
-			System.out.println("you must choose a course to drop");
+			
+			showAlert("You must choose a course to drop");
 		}
 
 	}
+	
+	public static void showAlert(String message) {
+		
+		Alert alert = new Alert(AlertType.INFORMATION, message, ButtonType.OK);
+		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+		alert.show();
+		
+	}
+	
 
 	class Handler implements EventHandler<ActionEvent> {
 
@@ -189,8 +201,9 @@ public class StudentsScene extends Scene {
 				text_ID.setText(getStudentID(indexOnStudentsPane));
 
 			} else if (((Button) button.getSource()).getText().equals("Search")) {
-
-				indexOnStudentsPane = findStudentByID(text_ID.getText());
+				int index = findStudentByID(text_ID.getText());
+				if(index >= 0) {indexOnStudentsPane = index;}
+				else {showAlert("Wrong ID");}
 
 			} else if (((Button) button.getSource()).getText().equals("Drop")) {
 
