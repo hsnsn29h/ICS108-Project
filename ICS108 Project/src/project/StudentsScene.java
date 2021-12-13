@@ -150,12 +150,12 @@ public class StudentsScene extends Scene {
 				CommonClass.getStudentList().get(findStudentByID(stuID)).getCourses()
 						.add(CommonClass.getCourseList().get(CommonClass.findCourseByID(courseID)));
 			} else {
-				showAlert("There is no avaliable seats");
+				CommonClass.showAlert("There is no avaliable seats");
 			}
 
 			CommonClass.getCourseList().get(CommonClass.findCourseByID(courseID)).register();
 		} else {
-			showAlert("You must choose a course to register");
+			CommonClass.showAlert("You must choose a course to register");
 		}
 	}
 
@@ -169,18 +169,13 @@ public class StudentsScene extends Scene {
 			CommonClass.getCourseList().get(CommonClass.findCourseByID(courseID)).drop();
 		} else {
 			
-			showAlert("You must choose a course to drop");
+			CommonClass.showAlert("You must choose a course to drop");
 		}
+		
 
 	}
 	
-	public static void showAlert(String message) {
-		
-		Alert alert = new Alert(AlertType.INFORMATION, message, ButtonType.OK);
-		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-		alert.show();
-		
-	}
+
 	
 
 	class Handler implements EventHandler<ActionEvent> {
@@ -203,7 +198,7 @@ public class StudentsScene extends Scene {
 			} else if (((Button) button.getSource()).getText().equals("Search")) {
 				int index = findStudentByID(text_ID.getText());
 				if(index >= 0) {indexOnStudentsPane = index;}
-				else {showAlert("Wrong ID");}
+				else {CommonClass.showAlert("Wrong ID");}
 
 			} else if (((Button) button.getSource()).getText().equals("Drop")) {
 

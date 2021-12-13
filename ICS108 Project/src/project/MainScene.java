@@ -14,9 +14,9 @@ import javafx.stage.Stage;
 
 public class MainScene extends Scene {
 
-	static BorderPane mainPane = new BorderPane();
+	static BorderPane mainPane = new BorderPane(); 
 
-	static Stage primaryStage = Driver.primaryStage;
+	static Stage primaryStage = Driver.primaryStage; 
 
 	public MainScene() {
 
