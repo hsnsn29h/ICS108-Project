@@ -15,9 +15,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class CoursesScene extends Scene { //Extending the Scene class to get the features of it 
+public class CoursesScene extends Scene { 
 
-	static BorderPane mainPane = new BorderPane(); //Initializing the main used pane outside
+	static BorderPane mainPane = new BorderPane(); //Initializing the main pane 
 
 	static Stage primaryStage = Driver.primaryStage; //Making a variable for the primary stage initialized in the Driver file
 
@@ -37,13 +37,13 @@ public class CoursesScene extends Scene { //Extending the Scene class to get the
 	
 	// ^ declaring the all above variables as static variables to use them in all methods and handlers ^
 	
-	public CoursesScene() { //The main constructor which is used to create an object of the courses scene
+	public CoursesScene() { 
 
 		super(mainPane, 1024, 512); //using the constructor of the parent class (Scene)
 
-		mainPane.setPadding(new Insets(24, 24, 24, 24)); //setting the paddings for the main pane
+		mainPane.setPadding(new Insets(24, 24, 24, 24)); 
 		
-		GridPane gridpane = new GridPane(); // Making a gridpane to hold all courses information
+		GridPane gridpane = new GridPane(); // Making a gridPane to hold all courses information
 
 		course_ID = new TextField();
 		course_Name = new TextField();
@@ -56,14 +56,12 @@ public class CoursesScene extends Scene { //Extending the Scene class to get the
 		
 		VBox vboxTextFields = new VBox(5); // Making a VBox to hold all data fields in a vertical order
 		vboxTextFields.getChildren().addAll(course_ID, course_Name, course_Days, course_Location, course_Time,
-				course_Status); // Adding all data fields to the VBox
+				course_Status); 
 		vboxTextFields.setPrefWidth(260);
 		
 		String[] labelNames = { "ID", "Name", "Days", "Location", "Time", "Status" }; 
 		Label[] labels = new Label[6];
 		// ^^ Making Labels array + Label Names for each data field
-		VBox vboxLabels = new VBox(15); // Making a VBox to hold the labels of the data fields
-		
 
 		int labelCounter = 0; // number to go through the list of labels
 
@@ -72,17 +70,19 @@ public class CoursesScene extends Scene { //Extending the Scene class to get the
 			labelCounter++; 
 
 		}
-		vboxLabels.getChildren().addAll(labels); // Adding all labels to their VBox
+		
+		VBox vboxLabels = new VBox(15); // Making a VBox to hold the labels of the data fields
+		vboxLabels.getChildren().addAll(labels); 
 
-		gridpane.addColumn(0, vboxLabels); // Adding the VBox for the lables of the data field on the left of the gridpane
-		gridpane.addColumn(2, vboxTextFields); // Adding the VBox for the data fields on the right of the gridpane
-		gridpane.setAlignment(Pos.CENTER); // Aligning the label to the center
+		gridpane.addColumn(0, vboxLabels); // Adding the VBox for the labels of the data field on the left of the gridPane
+		gridpane.addColumn(2, vboxTextFields); // Adding the VBox for the data fields on the right of the gridPane
+		gridpane.setAlignment(Pos.CENTER); // Aligning the gridPane to the center
 
 		Button[] buttons = new Button[4]; // Making a list of buttons to initialize all buttons together
-		String[] buttonNames = { "Back", "Pervious", "Next", "Search" }; // Button names for each button in their right order
+		String[] buttonNames = { "Back", "Pervious", "Next", "Search" }; 
 		int buttonCounter = 0; // number to go through the array of buttons using a loop
 		HBox hbox = new HBox(5); // HBox that holds all buttons in a horizontal way
-		Handler handler = new Handler(); // Creating a class for the handler that all buttons use
+		Handler handler = new Handler(); 
 
 		for (String name : buttonNames) { // loop used to initialize buttons and assign handlers to them
 
@@ -94,31 +94,31 @@ public class CoursesScene extends Scene { //Extending the Scene class to get the
 
 		}
 
-		list_Courses = new ListView<String>(); // Initializing the listview that holds all courses
-		listAllCourses(list_Courses, indexOnCoursesPane); // Adding all courses to the listview
+		list_Courses = new ListView<String>(); // Initializing the listView that holds all courses
+		listAllCourses(list_Courses, indexOnCoursesPane); // Adding all courses to the listView
 
-		list_RStudents = new ListView<String>(); // Initializing a listview that holds all students registered in a selected course
+		list_RStudents = new ListView<String>(); // Initializing a listView that holds all students registered in a selected course
 		listRStudents(list_RStudents, indexOnCoursesPane); // Adding all those students to the list
 
 		listData(); // A method that loads all data into the data fields (text fields/labels/buttons)
 
 		list_Courses.getSelectionModel().selectedItemProperty().addListener(e -> {
-			// This lambda expression makes it so that whenever you choose an item on the listview, the index on it will be changed
-			// and all data fields will be updated as well to the new index, you can also use arrows to select a course on the listview 
+			// This lambda expression makes it so that whenever you choose an item on the listView, the index on it will be changed
+			// and all data fields will be updated as well to the new index, you can also use arrows to select a course on the listView 
 			indexOnCoursesPane = list_Courses.getSelectionModel().getSelectedIndex();
 			listData();
 
 		});
 		VBox vboxStudents = new VBox(15); // A VBox to hold the list of students registered in a course and how many there are
-		vboxStudents.getChildren().addAll(Course_Seats, list_RStudents); // Adding both of them to the VBox
+		vboxStudents.getChildren().addAll(Course_Seats, list_RStudents); 
 
 		mainPane.setRight(vboxStudents); // Putting the VBox containing students registered in a course on the right of the main pane
-		mainPane.setLeft(list_Courses); // Putting the Listview containing all courses on the leftof the main pane
+		mainPane.setLeft(list_Courses); // Putting the ListView containing all courses on the left of the main pane
 		hbox.setAlignment(Pos.CENTER); 
-		hbox.getChildren().addAll(buttons); //adding all buttons to the HBox of buttons
-		mainPane.setBottom(hbox); // adding the hbox of buttons to the bottom of the main pane
+		hbox.getChildren().addAll(buttons); 
+		mainPane.setBottom(hbox); // adding the hBox of buttons to the bottom of the main pane
 
-		mainPane.setCenter(gridpane); // adding the gridpane with all data fields to the center of the main pane
+		mainPane.setCenter(gridpane); // adding the gridPane with all data fields to the center of the main pane
 
 	}
 
@@ -176,22 +176,24 @@ public class CoursesScene extends Scene { //Extending the Scene class to get the
 	}
 
 	public void listData() {
-		// This is a method that updates all data fields after the index of the selected item on the course viewlist is changed
+		// This is a method that updates all data fields after the index of the selected item on the course listView is changed
 		// or after a button has been pressed
 		Course course = findCourseObjectByID(list_Courses.getItems().get(indexOnCoursesPane)); 
-		// ^ Creating a Course object to make it easier to retrive all information to fill the data fields ^
+		// ^ Creating a Course object to make it easier to retrieve all information to fill the data fields ^
 		
-		course_ID.setText(course.getCourseID()); //Updating the ID data field by the ID of the course
-		course_Days.setText(course.getCourseDays()); //Updating the Days data field by the Days of the course
-		course_Name.setText(course.getCourseName()); //Updating the Name data field by the Name of the course
-		course_Location.setText(course.getCourseLocation()); //Updating the Location data field by the Location of the course
-		course_Time.setText(course.getCourseTime()); //Updating the Time data field by the Time of the course
-		course_Status.setText((course.getAvailableSeats() > 0) ? "Open" : "Closed"); //Updating the Status data field by the Status of the course
+		course_ID.setText(course.getCourseID()); 
+		course_Days.setText(course.getCourseDays()); 
+		course_Name.setText(course.getCourseName()); 
+		course_Location.setText(course.getCourseLocation()); 
+		course_Time.setText(course.getCourseTime()); 
+		course_Status.setText((course.getAvailableSeats() > 0) ? "Open" : "Closed"); 
+		// ^ Updating all information fields
+		
 		Course_Seats.setText("There are " + (25 - course.getAvailableSeats()) + " registered in " + course.getCourseID());
 		listRStudents(list_RStudents, indexOnCoursesPane);
 		//^Updating the amount of students registered by using a formula considering that every class takes only 25 students
 		//^and subtracting that number from the available seats
-		list_Courses.getSelectionModel().select(indexOnCoursesPane); //Updating the selection of a course on the listview
+		list_Courses.getSelectionModel().select(indexOnCoursesPane); //Updating the selection of a course on the listView
 
 	}
 
@@ -201,14 +203,14 @@ public class CoursesScene extends Scene { //Extending the Scene class to get the
 		public void handle(ActionEvent button) {
 
 			if (((Button) button.getSource()).getText().equals("Next")) {
-				// ^ Checks if the button name is Next, increases the index on the courses list by one if that is True
+				//  increases the index on the courses list by one and set to 0 if it is the last index
 				if (indexOnCoursesPane == CommonClass.getCourseListSize() - 1) {
 					indexOnCoursesPane = 0;
 				} else {
 					indexOnCoursesPane++;
 				}
 			} else if (((Button) button.getSource()).getText().equals("Pervious")) {
-				// ^ Checks if the button name is Previous, decreases the index on the courses list by one if that is True
+				//  decreases the index on the courses list by one and set to last index if it is 0
 
 				if (indexOnCoursesPane == 0)
 					indexOnCoursesPane = CommonClass.getCourseListSize() - 1;
@@ -216,15 +218,16 @@ public class CoursesScene extends Scene { //Extending the Scene class to get the
 					indexOnCoursesPane--;
 
 			} else if (((Button) button.getSource()).getText().equals("Search")) {
-				// ^ Checks if the button name is Search, Tries to find the index on the courses listview
-				// ^ of the specified course provided in the ID data field and show alert when ID is wrong
+				
+				//  Tries to find the index on the courses listView
+				// show the specified course provided in the ID data field and show alert when ID is wrong
 				
 				int index = CommonClass.findCourseByID(course_ID.getText());
 				if(index >= 0) {indexOnCoursesPane = index;}
-				else {CommonClass.showAlert("Wrong ID");}
+				else {CommonClass.showAlert("Wrong course ID");}
 
 			} else if (((Button) button.getSource()).getText().equals("Back")) {
-				// ^ Checks if the button name is Search, Goes back to the main scene if that returns True
+				//  Goes back to the main scene 
 				primaryStage.setScene(Driver.mainScene);
 				primaryStage.setTitle("Course Offering\\Main");
 
